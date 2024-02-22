@@ -5,16 +5,20 @@ export const useResource=(baseUrl)=>{
   const [resources,setResources]=useState([])
 
   useEffect(()=>{
-    axios.get(baseUrl)
-    .then(res=>{
-      //console.log(res);
-     setResources(res.data)})
-    })
+    //console.log('fetching...')
+    const fetchData=async()=>{
+     const res=await axios.get(baseUrl)
+      console.log(res)
+      setResources(res.data)
+    }
 
-  const create=(newObject)=>{
-    axios.post(baseUrl,newObject)
-    .then(res=>setResources(resources.concat(res.data)))
-    .catch(err=>console.log('err'))
+    fetchData()
+  },[])
+
+  const create=async(newObject)=>{
+    const res=await axios.post(baseUrl,newObject)
+    setResources(resources.concat(res.data))
+    
   }
 
   const service={
